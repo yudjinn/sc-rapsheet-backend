@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  db:
+    container_name: sc_rap_db
+    image: postgres:15
+    volumes:
+      - pg_rap_data:/var/lib/postrgresql/data/
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pg_pass
+      - POSTGRES_DB=sc_rap_db
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@scadmin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+volumes:
+  pg_rap_data:
